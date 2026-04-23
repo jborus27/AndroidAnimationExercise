@@ -38,10 +38,21 @@ fun Task5() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            val infiniteTransition = rememberInfiniteTransition(label = "infinite")
+            //mostly from android developers :)
+            val color by infiniteTransition.animateColor(
+                initialValue = Color.Magenta,
+                targetValue = Color.Blue,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(1000, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "color"
+            )
             Box(
                 modifier = Modifier.size(80.dp)
                     .clip(CircleShape)
-                    // TODO Add infinite transition between two colors
+                    .background(color)
             )
 
             Spacer(modifier = Modifier.height(16.dp))

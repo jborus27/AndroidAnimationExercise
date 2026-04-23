@@ -1,8 +1,13 @@
 package com.goble.animationpractice.views
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +35,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Task2() {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var isVisible by remember { mutableStateOf(false) }
+//        val animateWidth by animateDpAsState(
+//
+//        )
 
         Button(
             onClick = {
@@ -43,11 +53,27 @@ fun Task2() {
             Text("Toggle")
         }
 
-        // TODO Use AnimatedVisibility and set a transition
-        //      into the screen and out of the screen
-        Box(
-            modifier = Modifier.background(color = Color.Red)
-        )
+        AnimatedVisibility(
+            isVisible,
+            enter = slideInHorizontally() + fadeIn(),
+            exit = slideOutVertically() + fadeOut(),
+//            enter = {
+//                slideInHorizontally(
+//                    animationSpec = tween(
+//                        durationMillis = 200
+//                    )
+//                )
+//            }
+//            {
+//                fullWidth -> - fullWidth/3
+//            }
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Box(
+                modifier = Modifier.background(color = Color.Red)
+//                    .width(animateWidth)
+            )
+        }
     }
 }
 
